@@ -9,12 +9,12 @@ def print_expanded(expanded):
             print(expanded[i], end=',')
 
 search = UISearch()
-start = Node(0,0,0)
-goal = Node(0,0,1)
+start = Node(3,4,5)
+goal = Node(5,5,5)
 
-forbidden = []
+forbidden = [Node(4,5,5), Node(5,4,5), Node(5,5,4)]
 Node.set_forbidden(forbidden)
-expanded, path = search.run_DFS(start, goal, forbidden)
+expanded, path = search.run_BFS(start, goal, forbidden)
 
 print_expanded(expanded)
 

@@ -78,11 +78,15 @@ class Node:
                     if child.get_right() != self.get_right():
                         continue
 
-            if found_forbidden == True:
-                found_forbidden = False
-                continue
-            else:
-                new_children.append(child)
+                for node in self.forbidden:
+                    if child.get_value() == node.get_value():
+                        found_forbidden = True
+
+                if found_forbidden == True:
+                    found_forbidden = False
+                    continue
+
+            new_children.append(child)
 
         self.set_children(new_children)
         return self.children
