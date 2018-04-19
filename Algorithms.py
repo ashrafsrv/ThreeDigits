@@ -8,8 +8,6 @@ class UISearch:
         self.expanded = []
         self.path = []
         self.count = 0
-        self.recurstack = []
-
 
     def expand(self,node):
         node.generate_children()
@@ -20,9 +18,34 @@ class UISearch:
     def run_BFS(self, start, goal, forbidden):
         fringe = Queue()
         fringe.put(start)
-
+        i = 0
         while not fringe.empty():
             node = fringe.get()
+
+            if node not in self.expanded:
+                self.expand(node)
+
+                if self.count == 1000:
+                    return self.expanded, []
+
+                if node.get_value() == goal.get_value():
+                    self.set_path(self.expanded, node)
+                    return self.expanded, self.path
+
+                for child in node.get_children():
+                    fringe.put(child)
+                    child.set_parent(node)
+                    child.generate_children()
+        return self.expanded, []
+
+    def run_DFS(self, start, goal, forbidden):
+        fringe = Stack()
+        fringe.push(start)
+        # start.generate_children()
+
+        while not fringe.isEmpty():
+            node = fringe.pop()
+
 
             if node not in self.expanded:
 
@@ -31,30 +54,7 @@ class UISearch:
                 if self.count == 1000:
                     return self.expanded, []
 
-                if node.get_left() == goal.get_left() and node.get_middle() == goal.get_middle() and node.get_right() == goal.get_right():
-                    self.set_path(self.expanded, node)
-                    return self.expanded, self.path
-
-                for child in node.get_children():
-                    fringe.put(child)
-                    child.set_parent(node)
-        return self.expanded, []
-
-    def run_DFS(self, start, goal, forbidden):
-        fringe = Stack()
-        fringe.push(start)
-
-        while not fringe.isEmpty():
-            node = fringe.pop()
-            node.generate_children()
-            if node not in self.expanded:
-
-                self.expand(node)
-
-                if self.count == 10:
-                    return self.expanded, []
-
-                if node.get_left() == goal.get_left() and node.get_middle() == goal.get_middle() and node.get_right() == goal.get_right():
+                if node.get_value() == goal.get_value():
                     self.set_path(self.expanded, node)
                     return self.expanded, self.path
 
@@ -65,6 +65,7 @@ class UISearch:
                 for child in children_copy:
                     fringe.push(child)
                     child.set_parent(node)
+                    child.generate_children()
 
         return self.expanded, []
 

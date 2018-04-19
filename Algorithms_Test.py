@@ -7,7 +7,6 @@ def print_expanded(expanded):
             print(expanded[i])
         else:
             print(expanded[i], end=',')
-    print()
 
 search = UISearch()
 start = Node(0,0,0)

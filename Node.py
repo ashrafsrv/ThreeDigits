@@ -6,6 +6,10 @@ class Node:
         self.right = right
         self.children = []
         self.parent = None
+        self.value = int(self.__str__())
+
+    def get_value(self):
+        return self.value
 
     @classmethod
     def set_forbidden(cls, forbidden):
@@ -86,12 +90,13 @@ class Node:
     def __eq__(self, other):
         listA = self.get_children()
         listB = other.get_children()
+
         if self.left == other.get_left() and self.middle == other.get_middle() and self.right == other.get_right():
             if len(listA) != len(listB):
                 return False
 
             for i in range(len(listA)):
-                if listA[i].get_left() != listB[i].get_left() and listA[i].get_middle() != listB[i].get_middle() and listA[i].get_right() != listB[i].get_right:
+                if listA[i].get_value() != listB[i].get_value():
                     return False
             return True
         return False
