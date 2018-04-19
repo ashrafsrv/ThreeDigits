@@ -41,7 +41,6 @@ class UISearch:
     def run_DFS(self, start, goal, forbidden):
         fringe = Stack()
         fringe.push(start)
-        # start.generate_children()
 
         while not fringe.isEmpty():
             node = fringe.pop()
@@ -68,6 +67,54 @@ class UISearch:
                     child.generate_children()
 
         return self.expanded, []
+
+    def run_IDS(self, start, goal, forbidden):
+
+        depth = 0
+        global_expanded = []
+
+        while(self.count < 1000):
+            temp, path, boolean = self.run_DLS(start, goal, forbidden, depth)
+            global_expanded.extend(temp)
+
+            if len(global_expanded) >= 1000:
+                return global_expanded[:999], []
+                
+            if boolean == True:
+                return global_expanded, self.path
+            depth += 1
+            self.expanded = []
+        return global_expanded, []
+
+    def run_DLS(self, start, goal, forbidden, depth):
+        start.generate_children()
+        if start not in self.expanded:
+            self.expand(start)
+
+        if start.get_value() == goal.get_value():
+            self.set_path(self.expanded, start)
+            return self.expanded, self.path, True
+
+        if depth == 0:
+            return self.expanded, [], False
+
+        children = start.get_children()
+
+        for child in children:
+            child.set_parent(start)
+            e, p, boo = self.run_DLS(child, goal, forbidden, depth-1)
+            if boo:
+                return self.expanded, self.path, True
+
+        return self.expanded, [], False
+
+
+    def print_expanded(self, expanded):
+        for i in range(len(expanded)):
+            if i == len(expanded)-1:
+                print(expanded[i])
+            else:
+                print(expanded[i], end=',')
 
     def set_path(self, llist, goal):
         self.path.append(goal)

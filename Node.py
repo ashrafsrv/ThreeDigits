@@ -38,7 +38,10 @@ class Node:
         return self.right
 
     def get_parent(self):
-            return self.parent
+        return self.parent
+
+    def remove_children(self):
+        self.children = []
 
     def generate_possible_children(self):
         children = []

@@ -63,6 +63,8 @@ if algorithm == "B":
     expanded, path = search.run_BFS(start_node, goal_node, forbidden)
 if algorithm == "D":
     expanded, path = search.run_DFS(start_node, goal_node, forbidden)
+if algorithm == "I":
+    expanded, path = search.run_IDS(start_node, goal_node, forbidden)
 
 if len(path) == 0:
     print("No solution found.")
