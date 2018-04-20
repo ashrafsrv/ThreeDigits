@@ -9,13 +9,16 @@ def print_expanded(expanded):
             print(expanded[i], end=',')
 
 search = UISearch()
-start = Node(3,2,0)
-goal = Node(1,1,0)
+start = Node(0,0,0)
+goal = Node(0,0,1)
+
+
 
 forbidden = []
 Node.set_forbidden(forbidden)
-expanded, path = search.run_IDS(start, goal, forbidden)
+expanded, path = search.run_hill_climbing(start, goal, forbidden)
 
 print_expanded(expanded)
+
 
 print_expanded(path)

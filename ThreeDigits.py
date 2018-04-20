@@ -65,6 +65,12 @@ if algorithm == "D":
     expanded, path = search.run_DFS(start_node, goal_node, forbidden)
 if algorithm == "I":
     expanded, path = search.run_IDS(start_node, goal_node, forbidden)
+if algorithm == "G":
+    expanded, path = search.run_greedy(start_node, goal_node, forbidden)
+if algorithm == "H":
+    expanded, path = search.run_hill_climbing(start_node, goal_node, forbidden)
+if algorithm == "A":
+    expanded, path = search.run_AStar(start_node, goal_node, forbidden)
 
 if len(path) == 0:
     print("No solution found.")

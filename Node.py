@@ -7,6 +7,9 @@ class Node:
         self.children = []
         self.parent = None
         self.value = int(self.__str__())
+        self.heuristic = 0
+        self.pathcost = 0
+        self.eval = 0
 
     def get_value(self):
         return self.value
@@ -14,6 +17,36 @@ class Node:
     @classmethod
     def set_forbidden(cls, forbidden):
         cls.forbidden = forbidden
+
+    def set_heuristic(self, goal):
+        self.heuristic = abs(self.get_left()-goal.get_left()) + abs(self.get_middle() - goal.get_middle()) + abs(self.get_right() - goal.get_right())
+
+    def get_heuristic(self):
+        return self.heuristic
+
+    def set_pathcost(self, cost):
+        self.pathcost = cost
+
+    def get_pathcost(self):
+        return self.pathcost
+
+    def set_eval(self):
+        path = []
+        path.append(self)
+        parent = self.get_parent()
+        pathcost = 0
+
+        while parent is not None:
+            path.append(parent)
+            parent = parent.get_parent()
+            pathcost += 1
+
+        heuristic = self.get_heuristic()
+        val = heuristic + pathcost
+        self.eval = val
+
+    def get_eval(self):
+        return self.eval
 
     def get_forbidden(cls):
         return cls.forbidden
@@ -110,6 +143,12 @@ class Node:
 
     def __ne__(self, other):
         return not self == other
+
+    # def __lt__(self, other):
+    #     return self.heuristic < other.get_heuristic()
+    #
+    # def __gt__(self, other):
+    #     return self.heuristic > other.get_heuristic()
 
     def __hash__(self):
         return hash((self.left, self.middle, self.right))
